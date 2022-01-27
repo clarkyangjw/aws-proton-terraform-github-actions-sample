@@ -1,5 +1,5 @@
 {
-  "deploymentId" : "ce0d3b33-d595-4dc2-bc7d-0a3a96eed3d4",
+  "deploymentId" : "7761f8f7-2830-4ce7-8bbe-3f1248e00dea",
   "resourceMetadata" : {
     "arn" : "arn:aws:proton:us-east-2:286604908259:environment/staging-environment",
     "templateArn" : "arn:aws:proton:us-east-2:286604908259:environment-template/sample-vpc-environment-template",
