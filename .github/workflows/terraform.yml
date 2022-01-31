@@ -141,11 +141,11 @@ jobs:
       continue-on-error: true
 
     # This is a temporary measure until we have launched
-    # - name: Install Proton Model
-    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    #   run: |
-    #     aws s3 cp s3://aws-proton-preview-public-files/model/proton-2020-07-20.normal.json  .
-    #     aws configure add-model --service-model "file://proton-2020-07-20.normal.json" --service-name proton
+    - name: Install Proton Model
+      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      run: |
+        aws s3 cp s3://aws-proton-preview-public-files/model/proton-2020-07-20.normal.json  .
+        aws configure add-model --service-model "file://proton-2020-07-20.normal.json" --service-name proton
 
       
     - name: Notify Proton Success
