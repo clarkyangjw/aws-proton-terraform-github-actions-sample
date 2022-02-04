@@ -107,16 +107,16 @@ jobs:
       continue-on-error: false
 
     # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    # - name: Setup Terraform
-    #   uses: hashicorp/setup-terraform@v1
-    #   with:
-    #     terraform_version: 1.0.7
-    #     terraform_wrapper: false
-    #   continue-on-error: true
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
       with:
-        cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+        terraform_version: 1.0.7
+        terraform_wrapper: false
+      continue-on-error: true
+    # - name: Setup Terraform
+    #   uses: hashicorp/setup-terraform@v1
+    #   with:
+    #     cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
     #######################################################
     # MAKE SURE TO UPDATE THE BUCKET TO YOUR STATE BUCKET #
@@ -141,15 +141,16 @@ jobs:
     - name: Terraform Apply
       id: tf_apply
       if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve -var="aws_region=${{ inputs.aws_region }}"
+      # run: terraform apply -auto-approve -var="aws_region=${{ inputs.aws_region }}"
+      run: terraform destroy -var="aws_region=${{ inputs.aws_region }}"
       continue-on-error: true
 
     # This is a temporary measure until we have launched
-    - name: Install Proton Model
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: |
-        aws s3 cp s3://aws-proton-preview-public-files/model/proton-2020-07-20.normal.json  .
-        aws configure add-model --service-model "file://proton-2020-07-20.normal.json" --service-name proton
+    # - name: Install Proton Model
+    #   if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    #   run: |
+    #     aws s3 cp s3://aws-proton-preview-public-files/model/proton-2020-07-20.normal.json  .
+    #     aws configure add-model --service-model "file://proton-2020-07-20.normal.json" --service-name proton
 
       
     - name: Notify Proton Success
